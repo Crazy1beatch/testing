@@ -48,16 +48,22 @@ namespace HomeExercises
 		}
 
 		[TestCase("1.62", true, TestName = "No_Sign_Number_True")]
+		[TestCase("1,62", true, TestName = "No_Sign_Number_With_Coma_True")]
 		[TestCase("+64.2", true, TestName = "Positive_Sign_Number_True")]
+		[TestCase("+64,2", true, TestName = "Positive_Sign_Number_With_Coma_True")]
 		[TestCase("-12.13", false, TestName = "Negative_Sign_Number_False")]
+		[TestCase("-12,13", false, TestName = "Negative_Sign_Number_With_Coma_False")]
 		public void ValidatesCorrectly_WithOnlyPositive(string number, bool expected)
 		{
 			numberValidatorOnlyPositive.IsValidNumber(number).Should().Be(expected);
 		}
 
 		[TestCase("1.62", true, TestName = "No_Sign_Number_True")]
+		[TestCase("1,62", true, TestName = "No_Sign_Number_With_Coma_True")]
 		[TestCase("+64.2", true,  TestName = "Positive_Sign_Number_True")]
+		[TestCase("+64,2", true,  TestName = "Positive_Sign_Number_With_Coma_True")]
 		[TestCase("-12.13", true, TestName = "Negative_Sign_Number_True")]
+		[TestCase("-12,13", true, TestName = "Negative_Sign_Number_With_Coma_True")]
 		public void ValidatesCorrectly_WithNegative(string number, bool expected)
 		{
 			numberValidatorNegative.IsValidNumber(number).Should().Be(expected);
@@ -71,7 +77,9 @@ namespace HomeExercises
 		[TestCase(".12", TestName = "No_Digit_Part")]
 		[TestCase(" 0", TestName = "Space_Before_Number")]
 		[TestCase("0 ", TestName = "Space_After_Number")]
-		[TestCase("0.,1", TestName = "Too_Much_Separators")]
+		[TestCase("0.,1", TestName = "Too_Much_Different_Separators")]
+		[TestCase("0..1", TestName = "Too_Much_Dot_Separators")]
+		[TestCase("0,,1", TestName = "Too_Much_Coma_Separators")]
 		[TestCase("0.1,3", TestName = "Too_Much_Separators_Different_Places")]
 		[TestCase("++0.1", TestName = "Too_Much_Signs")]
 		[TestCase("0.112", TestName = "Frac_Is_Bigger_Than_Scale")]
