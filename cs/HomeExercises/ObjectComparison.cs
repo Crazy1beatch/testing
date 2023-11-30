@@ -16,9 +16,9 @@ namespace HomeExercises
 				new Person("Vasili III of Russia", 28, 170, 60, null));
 
 			// Перепишите код на использование Fluent Assertions.
-			actualTsar.Should().BeEquivalentTo(expectedTsar, parameters => 
-				parameters.Excluding(tsar=> tsar.Id).Excluding(tsar => tsar.Parent!.Id));
-			
+			actualTsar.Should().BeEquivalentTo(expectedTsar, parameters =>
+				parameters.Excluding(tsar => tsar.SelectedMemberInfo.Name.Equals(nameof(Person.Id))));
+
 			/*
 			 * Такой тест не придётся переписывать при добавлении новых полей и свойств, за исключением тех,
 			 * которые не должы совпадать, например ID. Так же более информативно показывается, почему не одинаковы
@@ -39,6 +39,9 @@ namespace HomeExercises
 			/*
 			 * Такой тест не даст информативный ответ, почему не одинаковы цари. Кроме того, при добавлении
 			 * нового поля или свойства, придётся менять функцию AreEqual, иначе тест будет не валидным.
+			 * Так же достаточно сломать или написать AreEqual не правильно, так что тест перестанет проходить,
+			 * а понять это будет сложно.
+			 * Ну, ещё сложно читать такую портянку из логических условий и не путаться.
 			 */
 		}
 
