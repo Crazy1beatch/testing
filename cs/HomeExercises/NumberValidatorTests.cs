@@ -53,12 +53,18 @@ namespace HomeExercises
 		}
 
 		[TestCaseSource(typeof(TestData), nameof(TestData.TestCasesNumberValidatesFalse))]
-		public void ReturnsFalse_When(string number)
+		public void ReturnsFalse_WhenOnlyPositive_And(string number)
 		{
 			var numberValidatorOnlyPositive = new NumberValidator(5, 2, true);
-			var numberValidatorNegative = new NumberValidator(5, 2);
 			numberValidatorOnlyPositive.IsValidNumber(number).Should().Be(false);
+		}
+		
+		[TestCaseSource(typeof(TestData), nameof(TestData.TestCasesNumberValidatesFalse))]
+		public void ReturnsFalse_WhenNotOnlyPositive_And(string number)
+		{
+			var numberValidatorNegative = new NumberValidator(5, 2);
 			numberValidatorNegative.IsValidNumber(number).Should().Be(false);
 		}
+		
 	}
 }
