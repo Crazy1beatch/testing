@@ -7,29 +7,31 @@ namespace HomeExercises
 	[TestFixture]
 	public class NumberValidatorTests
 	{
-		[TestCase(1, 0, TestName = "Small_PrecisionAndScale")]
-		[TestCase(99999, 99998, TestName = "Big_PrecisionAndScale")]
+		[Category("Creation_Tests")]
+		[TestCaseSource(typeof(TestData), nameof(TestData.TestCasesNumberValidatorCreation))]
 		public void NumberValidatorCreatesCorrectly_NoOnlyPositive(int precision, int scale)
 		{
 			var action = new Action(() => new NumberValidator(precision, scale));
 			action.Should().NotThrow();
 		}
-
-		[TestCase(1, 0, false, TestName = "Small_PrecisionAndScale_OnlyPositive_False")]
-		[TestCase(1, 0, true, TestName = "Small_PrecisionAndScale_OnlyPositive_True")]
-		[TestCase(99999, 99998, false, TestName = "Big_PrecisionAndScale_OnlyPositive_False")]
-		[TestCase(99999, 99998, true, TestName = "Big_PrecisionAndScale_OnlyPositive_True")]
-		public void NumberValidatorCreatesCorrectly_WhenValidArguments(int precision, int scale, bool onlyPositive)
+		
+		[Category("Creation_Tests")]
+		[TestCaseSource(typeof(TestData), nameof(TestData.TestCasesNumberValidatorCreation))]
+		public void NumberValidatorCreatesCorrectly_WhenValidArguments_OnlyPositive_True(int precision, int scale)
 		{
-			var action = new Action(() => new NumberValidator(precision, scale, onlyPositive));
+			var action = new Action(() => new NumberValidator(precision, scale, true));
 			action.Should().NotThrow();
 		}
-
-		[TestCase(-1, 2, TestName = "Negative_Precision")]
-		[TestCase(0, 2, TestName = "Zero_Precision")]
-		[TestCase(1, -1, TestName = "Negative_Scale")]
-		[TestCase(2, 3, TestName = "Scale_Grater_Than_Precision")]
-		[TestCase(2, 2, TestName = "Scale_Equals_To_Precision")]
+		
+		[Category("Creation_Tests")]
+		[TestCaseSource(typeof(TestData), nameof(TestData.TestCasesNumberValidatorCreation))]
+		public void NumberValidatorCreatesCorrectly_WhenValidArguments_OnlyPositive_False(int precision, int scale)
+		{
+			var action = new Action(() => new NumberValidator(precision, scale, false));
+			action.Should().NotThrow();
+		}
+		
+		[TestCaseSource(typeof(TestData), nameof(TestData.TestCasesNumberValidatorThrows_On_Creation))]
 		public void ThrowException_WhenInvalidArguments(int precision, int scale)
 		{
 			var action = new Action(() => new NumberValidator(precision, scale, true));
@@ -50,22 +52,7 @@ namespace HomeExercises
 			numberValidator.IsValidNumber(number).Should().Be(expected);
 		}
 
-		[TestCase("a.sd", TestName = "Not_A_Number")]
-		[TestCase("", TestName = "Empty_String")]
-		[TestCase(null, TestName = "Null_String")]
-		[TestCase("?0.1", TestName = "Unexpected_Symbol")]
-		[TestCase("10.", TestName = "No_Frac_Part")]
-		[TestCase(".12", TestName = "No_Digit_Part")]
-		[TestCase(" 0", TestName = "Space_Before_Number")]
-		[TestCase("0 ", TestName = "Space_After_Number")]
-		[TestCase("0.,1", TestName = "Too_Much_Different_Separators")]
-		[TestCase("0..1", TestName = "Too_Much_Dot_Separators")]
-		[TestCase("0,,1", TestName = "Too_Much_Coma_Separators")]
-		[TestCase("0.1,3", TestName = "Too_Much_Separators_Different_Places")]
-		[TestCase("++0.1", TestName = "Too_Much_Signs")]
-		[TestCase("0.112", TestName = "Frac_Is_Bigger_Than_Scale")]
-		[TestCase("1110.11", TestName = "Number_Is_Bigger_Than_Precision")]
-		[TestCase("+110.11", TestName = "Number_Is_Bigger_Than_Precision_When_Sign")]
+		[TestCaseSource(typeof(TestData), nameof(TestData.TestCasesNumberValidatesFalse))]
 		public void ReturnsFalse_When(string number)
 		{
 			var numberValidatorOnlyPositive = new NumberValidator(5, 2, true);
