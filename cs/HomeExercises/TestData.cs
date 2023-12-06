@@ -13,13 +13,7 @@ namespace HomeExercises
 			yield return  new TestCaseData(2, 3).SetName("Scale_Grater_Than_Precision");
 			yield return  new TestCaseData(2, 2).SetName("Scale_Equals_To_Precision");
 		}
-		
-		public static IEnumerable<TestCaseData> TestCasesNumberValidatorCreation()
-		{
-			yield return new TestCaseData(1, 0).SetName("Small_PrecisionAndScale");
-			yield return  new TestCaseData(int.MaxValue, int.MaxValue - 1).SetName("Big_PrecisionAndScale");
-		}
-		
+
 		public static IEnumerable<TestCaseData> TestCasesNumberValidation(bool isOnlyPositive)
 		{
 			yield return new TestCaseData("1.62", true).SetName("No_Sign_Number_True");
@@ -47,7 +41,16 @@ namespace HomeExercises
 			yield return new TestCaseData("++0.1").SetName("Too_Much_Signs");
 			yield return new TestCaseData("0.112").SetName("Frac_Is_Bigger_Than_Scale");
 			yield return new TestCaseData("1110.11").SetName("Number_Is_Bigger_Than_Precision");
-			yield return new TestCaseData("+110.11").SetName("Number_Is_Bigger_Than_Precision_When_Sign");
+			yield return new TestCaseData("0x01").SetName("Hex_Number");
+			yield return new TestCaseData("aboba").SetName("Random_String");
+			yield return new TestCaseData("110/11").SetName("Invalid_Separator_\"/\"");
+			yield return new TestCaseData("110;11").SetName("Invalid_Separator_\";\"");
+			yield return new TestCaseData("23\n23").SetName("Invalid_Separator_\"\\n\"");
+			yield return new TestCaseData(" ").SetName("Space_String");
+			yield return new TestCaseData("0+.0").SetName("Sign_Wrong_Position");
+			yield return new TestCaseData("0.0+").SetName("Sign_After_Number");
+			yield return new TestCaseData("\n").SetName("New_Line_String");
+			yield return new TestCaseData("\t").SetName("Tab_String");
 		} 
 	}
 }
