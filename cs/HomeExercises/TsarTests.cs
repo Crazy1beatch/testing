@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace HomeExercises
 {
-	public class ObjectComparison
+	public class TsarTests
 	{
 		[Test]
 		[Description("Проверка текущего царя")]
